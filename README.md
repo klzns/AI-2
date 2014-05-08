@@ -2,19 +2,34 @@
 
 Second project of Artificial Intelligence class @ PUC-Rio
 
+
 ## Instructions
 
 The project instructions are located at [ENUNCIADO.pdf](ENUNCIADO.pdf).
+
 
 ## Project Structure
 
 The project is separated in three main applications:
 
- * **Map Generator**: generates a random map in a pre-determined format, following the specifications set by the instructions. Implemented in *any language*.
+ * **Map Generator**: generates a random map in a pre-determined format, following the specifications set by the instructions. Implemented in *Ruby*.
 
  * **Path Generator**: reads the map and uses logic to walk through the forest, while facing enemies, gathering valuables, and (hopefully) achieving the objective. Implemented in *Prolog*.
 
  * **Path Illustrator**: reads the map and path that were generated and draws the forest, illustrating the hero's journey. Implemented in *web technologies*.
+
+
+### Map Generator
+
+The main script is `src/generator/generator.rb`. You can run it like this, if you have Ruby installed:
+
+```
+ruby src/generator/generator.rb > generated/items.txt
+```
+
+It outputs the list of items to stdout, so we'll be redirecting it to a file.
+
+It is important that the file `src/map.txt` is accessible and in the correct format. It depends on this file to learn about the map terrains and size.
 
 
 ## Development
