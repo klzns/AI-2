@@ -12,6 +12,7 @@ class Map
   end
 
   def tile(x, y)
+    x, y = x.to_i, y.to_i
     tiles[x + y*width]
   end
 

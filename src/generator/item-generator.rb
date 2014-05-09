@@ -15,6 +15,6 @@ end
 
 map.each_tile do |tile, x, y|
   tile.items.each do |i|
-    puts "#{x} #{y} #{i}"
+    puts "#{y} #{x} #{i}"
   end
 end

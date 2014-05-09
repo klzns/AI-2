@@ -11,6 +11,8 @@ class Tile
   end
 
   def can_place?(item)
+    item = item.to_sym
+
     # Only grass tiles can contain items
     return false if kind == :f
 
@@ -27,8 +29,10 @@ class Tile
   end
 
   def place(item)
+    item = item.to_sym
+
     unless can_place?(item)
-      raise StandardError.new("Can't place the item #{item} on this tile")
+      raise StandardError.new("Can't place the item #{item} on this tile #{kind} [#{items.join(',')}]")
     end
 
     items.push(item)
