@@ -17,7 +17,6 @@ class Map
   end
 
   def each_tile &block
-    puts "#{height} #{width}"
     (0...height).each do |y|
       (0...width).each do |x|
         block.call(tile(x, y), x, y)
