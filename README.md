@@ -26,7 +26,7 @@ The project is separated in three main applications:
 The main script is `src/generator/item-generator.rb`. You can run it like this, if you have Ruby installed:
 
 ```
-ruby src/generator/generator.rb > src/items.txt
+ruby src/generator/item-generator.rb > src/items.txt
 ```
 
 It outputs the list of items to stdout, so we'll be redirecting it to a file.
