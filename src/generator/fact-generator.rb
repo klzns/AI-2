@@ -16,8 +16,8 @@ end
 
 
 map.each_tile do |tile, x, y|
-  puts "terrain(#{x}, #{y}, #{tile.kind})."
+  puts "tile_#{tile.kind}(#{x}, #{y})."
   tile.items.each do |item|
-    puts "item(#{x}, #{y}, #{item})."
+    puts "item_#{item}(#{x}, #{y})."
   end
 end
