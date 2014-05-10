@@ -1,3 +1,34 @@
+.main {
+    width: 630px;
+    padding: 5px 0;
+    margin: auto;
+}
+
+.map-lost-woods {
+    height: auto;
+    width: 630px;
+}
+
+.map-row {
+    clear: both;
+}
+.map-col {
+    height: 15px;
+    width: 15px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    background: white;
+}
+
+.map-col.f {
+    background: #245e37;
+}
+
+.map-col.g {
+    background: #6AE866;
+}
+
 /* Make the masthead heading the same height as the navigation */
 @font-face {
   font-family: 'Triforce';
@@ -17,11 +48,13 @@ body {
 
 /* Custom page footer */
 .footer {
-  color: #fff;
-  padding-right: 5px;
-  height: 30px;
-  background: #245e37;
-  line-height: 30px;
+    width: 630px;
+    margin: auto;
+    color: #fff;
+    padding-right: 5px;
+    height: 30px;
+    background: #245e37;
+    line-height: 30px;
 }
 
 .main {

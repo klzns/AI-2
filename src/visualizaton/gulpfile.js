@@ -14,10 +14,12 @@ gulp.task('styles', function () {
 });
 
 gulp.task('scripts', function () {
-    return gulp.src('app/scripts/**/*.js')
-        .pipe($.jshint())
-        .pipe($.jshint.reporter(require('jshint-stylish')))
-        .pipe($.size());
+    return gulp.src('app/scripts/coffee/**/*.coffee')
+        .pipe($.coffeelint())
+        .pipe($.coffeelint.reporter())
+        .pipe($.coffee())
+        .pipe(gulp.dest('app/scripts/js'))
+        .pipe(gulp.dest('dist/scripts/js'))
 });
 
 gulp.task('html', ['styles', 'scripts'], function () {
@@ -40,18 +42,13 @@ gulp.task('html', ['styles', 'scripts'], function () {
 
 gulp.task('images', function () {
     return gulp.src('app/images/**/*')
-        .pipe($.cache($.imagemin({
-            optimizationLevel: 3,
-            progressive: true,
-            interlaced: true
-        })))
-        .pipe(gulp.dest('dist/images'))
-        .pipe($.size());
+    .pipe(gulp.dest('dist/images'))
+    .pipe($.size());
 });
 
 gulp.task('fonts', function () {
     return $.bowerFiles()
-        .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+        .pipe($.filter('app/fonts/*.{eot,svg,ttf,woff}'))
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
         .pipe($.size());
@@ -97,7 +94,8 @@ gulp.task('wiredep', function () {
 
     gulp.src('app/*.html')
         .pipe(wiredep({
-            directory: 'app/bower_components'
+            directory: 'app/bower_components',
+            ignorePath: 'app/'
         }))
         .pipe(gulp.dest('app'));
 });
@@ -110,14 +108,14 @@ gulp.task('watch', ['connect', 'serve'], function () {
     gulp.watch([
         'app/*.html',
         '.tmp/styles/**/*.css',
-        'app/scripts/**/*.js',
+        'app/scripts/**/*.coffee',
         'app/images/**/*'
     ]).on('change', function (file) {
         server.changed(file.path);
     });
 
     gulp.watch('app/styles/**/*.css', ['styles']);
-    gulp.watch('app/scripts/**/*.js', ['scripts']);
+    gulp.watch('app/scripts/**/*.coffee', ['scripts']);
     gulp.watch('app/images/**/*', ['images']);
     gulp.watch('bower.json', ['wiredep']);
 });
