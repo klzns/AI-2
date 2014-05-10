@@ -5,31 +5,144 @@
 }
 
 .map-lost-woods {
-    height: auto;
+    height: 630px;
     width: 630px;
 }
 
 .map-row {
-    clear: both;
+    height: 15px;
+    width: 630px;
+    margin-top: -2px;
 }
 .map-col {
     height: 15px;
     width: 15px;
-    float: left;
     padding: 0;
     margin: 0;
-    background: white;
+    position: relative !important;
 }
 
+/* Forest */
 .map-col.f {
-    background: #245e37;
+    background: url("../images/sprite.png") #64A42C -86px -30px;
 }
 
+/* Grass */
 .map-col.g {
-    background: #6AE866;
+    background: url("../images/sprite.png") -58px -30px;
 }
 
-/* Make the masthead heading the same height as the navigation */
+
+.map-col .f, .map-col .c , .map-col .r {
+    height: 5px;
+    width: 5px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+}
+.map-col div:nth-child(odd) {
+    margin-right: 2px;
+}
+
+
+/* Can be at the same place */
+/* Fake Master Sword */
+.map-col .f {
+    height: 14px;
+    width: 8px;
+    background: url("../images/sprite.png") -87px -86px;
+}
+
+/* Heart */
+.map-col .c {
+    height: 5px;
+    width: 5px;
+    background: url("../images/sprite.png") -72px -95px;
+}
+
+/* Rupee */
+.map-col .r {
+    height: 6px;
+    width: 3px;
+    background: url("../images/sprite.png") -73px -84px;
+}
+
+
+.map-col .b, .map-col .e, .map-col .v, .map-col .m {
+    position: absolute;
+}
+
+/* Hole */
+.map-col .b {
+    height: 15px;
+    width: 15px;
+    top: 0;
+    background: url("../images/sprite.png") -4px -88px #64A42C;
+}
+
+/* Monster */
+.map-col .e {
+    height: 15px;
+    width: 13px;
+    top: 0;
+    background: url("../images/sprite.png") -98px -85px;
+}
+
+/* Vortex */
+.map-col .v {
+    height: 15px;
+    width: 15px;
+    top: 0;
+    background: url("../images/sprite.png") -37px -86px;
+}
+
+/* Master Sword */
+.map-col .m {
+    top: 0;
+    height: 14px;
+    width: 8px;
+    background: url("../images/sprite.png") -87px -86px;
+}
+
+
+.link {
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background-image: url("../images/sprite.png");
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.link.link-down {
+    height: 18px;
+    width: 12px;
+    bottom: 0;
+    background-position: -59px 0;
+}
+
+.link.link-up {
+    height: 18px;
+    width: 12px;
+    bottom: 0;
+    background-position: -87px 0;
+}
+
+.link.link-left {
+    height: 18px;
+    width: 12px;
+    bottom: 0;
+    background-position: -34px 0;
+}
+
+.link.link-right {
+    height: 18px;
+    width: 12px;
+    bottom: 0;
+    background-position: -5px 0;
+}
+
 @font-face {
   font-family: 'Triforce';
   src: url('../fonts/Triforce.ttf');
