@@ -104,7 +104,9 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         fallDownHole: () =>
+            @action = ''
             @changeCost(@cost-10000)
+            @changeEnergy(0)
             oldLink = @getOldLink()
 
             @action = 'falling'
@@ -120,6 +122,7 @@ define ['world/render'], (Render) ->
         getAttacked: () =>
             @action = ''
             @changeCost(@cost-10000)
+            @changeEnergy(0)
             oldLink = @getOldLink()
 
             @action = 'damage'

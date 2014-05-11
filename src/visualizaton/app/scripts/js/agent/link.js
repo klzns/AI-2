@@ -133,7 +133,9 @@
 
       Link.prototype.fallDownHole = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost - 10000);
+        this.changeEnergy(0);
         oldLink = this.getOldLink();
         this.action = 'falling';
         return this.render.paintLink(oldLink, this);
@@ -151,6 +153,7 @@
         var oldLink;
         this.action = '';
         this.changeCost(this.cost - 10000);
+        this.changeEnergy(0);
         oldLink = this.getOldLink();
         this.action = 'damage';
         return this.render.paintLink(oldLink, this);
