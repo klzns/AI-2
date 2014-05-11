@@ -1,4 +1,5 @@
 /* DYNAMIC */
+:- dynamic has_master_sword/0.
 :- dynamic safe/2.
 :- dynamic visited/2.
 :- dynamic on/2.
@@ -31,12 +32,13 @@ detect_enemy(X, Y) :- adjacent(X, Y, XX, YY), item_E(XX, YY).
 detect_vortex(X, Y) :- adjacent(X, Y, XX, YY), item_V(XX, YY).
 
 /* INIT */
-on(20, 37).
 energy(100).
+on(20, 37).
+visited(20, 37).
+safe(20, 37).
 
 /* BEST ACTIONS, IN ORDER OF PREFERENCE */
 best_action(pick_rupee, none1, none2) :- on(X, Y), detect_rupee(X, Y).
 best_action(pick_sword, none1, none2) :- on(X, Y), detect_sword(X, Y).
 best_action(pick_heart, none1, none2) :- on(X, Y), detect_heart(X, Y).
-best_action(walk, X, Y) :- safe(X, Y), not(visited(X, Y)). /* TODO: BFS */
-
+best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)). /* TODO: BFS */
