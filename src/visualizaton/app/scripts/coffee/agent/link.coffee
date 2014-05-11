@@ -10,8 +10,8 @@ define ['world/render'], (Render) ->
             @render = new Render()
 
         turnLeft: () =>
-            @changeCost(@cost-1)
             oldLink = @getOldLink()
+            @changeCost(@cost-1)
 
             if @direction is 'up'
                 @direction = 'left'
@@ -25,8 +25,8 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         turnRight: () =>
-            @changeCost(@cost-1)
             oldLink = @getOldLink()
+            @changeCost(@cost-1)
 
             if @direction is 'up'
                 @direction = 'right'
@@ -40,8 +40,8 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         moveForward: () =>
-            @changeCost(@cost-1)
             oldLink = @getOldLink()
+            @changeCost(@cost-1)
 
             [@x, @y] = @getPointForward()
 
@@ -60,8 +60,8 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getRupee: () =>
-            @changeCost(@cost+10)
             oldLink = @getOldLink()
+            @changeCost(@cost+10)
 
             @removeObject(@x, @y, '.r')
 
@@ -69,8 +69,8 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getSword: () =>
-            @changeCost(@cost-100)
             oldLink = @getOldLink()
+            @changeCost(@cost-100)
 
             @removeObject(@x, @y, '.m')
 
@@ -78,8 +78,8 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getFakeSword: () =>
-            @changeCost(@cost-100)
             oldLink = @getOldLink()
+            @changeCost(@cost-100)
 
             @removeObject(@x, @y, '.f')
 
@@ -87,19 +87,20 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getHeart: () =>
-            @changeCost(@cost-10)
-            @changeEnergy(@energy+50)
             oldLink = @getOldLink()
+            @changeCost(@cost-10)
 
-            @removeObject(@x, @y, '.c')
+            if @removeObject(@x, @y, '.c')
+                @changeEnergy(@energy+50)
 
             @action = 'get-heart'
             @render.paintLink(oldLink, @)
 
         fallDownHole: () =>
-            @changeCost(@cost-10000)
-            @changeEnergy(0)
             oldLink = @getOldLink()
+            @changeCost(@cost-10000)
+
+            @changeEnergy(0)
 
             @action = 'falling'
             @render.paintLink(oldLink, @)
@@ -111,9 +112,9 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getAttacked: () =>
+            oldLink = @getOldLink()
             @changeCost(@cost-10000)
             @changeEnergy(0)
-            oldLink = @getOldLink()
 
             @action = 'damage'
             @render.paintLink(oldLink, @)
@@ -132,7 +133,8 @@ define ['world/render'], (Render) ->
             if object[0]
                 $(object[0]).remove()
                 return true
-            return false
+            else
+                return false
 
         changeCost: (to) =>
             $('.cost').text(to)
