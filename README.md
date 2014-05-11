@@ -8,6 +8,27 @@ Second project of Artificial Intelligence class @ PUC-Rio
 The project instructions are located at [ENUNCIADO.pdf](ENUNCIADO.pdf).
 
 
+## The Pipeline -- Running the Project
+
+```
+cd src
+
+# map.txt + item-generator.rb ==> items.txt
+ruby generator/item-generator.rb > items.txt`
+
+# map.txt + items.txt + fact-generator.rb ==> facts.pl
+ruby generator/fact-generator.rb > facts.pl
+
+# facts.pl + agent.py ==> action-log.json
+python logic/agent.py > action-log.json
+
+# action-log.json + gulp ==> localhost:9000
+gulp watch
+
+# now go to http://localhost:9000!
+```
+
+
 ## Project Structure
 
 The project is separated in three main applications:
@@ -16,9 +37,10 @@ The project is separated in three main applications:
 
  * **Fact Generator**: reads src/map.txt and src/items.txt and generates Prolog facts. Implemented in *Ruby*.
 
- * **Logic Agent**: reads the map and uses logic to walk through the forest, while facing enemies, gathering valuables, and (hopefully) achieving the objective. Generates an action/state log. Implemented in *Prolog*.
+ * **Logic Agent**: reads the map and uses logic to walk through the forest, while facing enemies, gathering valuables, and (hopefully) achieving the objective. Implemented in *Prolog* (logical decisions) and *Python* (consequences, path-finding, etc).
 
  * **Path Illustrator**: reads the map and path that were generated and draws the forest, illustrating the hero's journey. Implemented in *web technologies*.
+
 
 
 ### Item Generator
@@ -76,7 +98,5 @@ Coordinates follow these rules:
  * X is horizontal
  * Y is vertical
 
+### log.json
 
-## Running
-
-Pending.
