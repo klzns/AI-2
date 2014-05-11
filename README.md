@@ -10,6 +10,22 @@ The project instructions are located at [ENUNCIADO.pdf](ENUNCIADO.pdf).
 
 ## The Pipeline -- Running the Project
 
+First, install the dependencies:
+
+ * Ruby
+ * SWI-Prolog
+ * Python 2.7
+ * Pyswip
+ * Node.js
+ * Gulp (npm install --global gulp)
+
+Make sure the binaries of these tools are available on your PATH. 
+
+Also, make sure all of [SWI-Prolog, Python, Pyswip] are the same architechture (x86 or x64).
+
+
+Then, at the project root, run the following commands:
+
 ```
 cd src
 
