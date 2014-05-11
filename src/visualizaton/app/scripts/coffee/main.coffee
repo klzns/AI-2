@@ -1,7 +1,5 @@
 requirejs.config
     baseUrl: 'scripts/js/'
-    waitSeconds: 0
-
 
 # Main function
 requirejs ['world/render', 'world/grid', 'agent/link'], (Render, Grid, Link) ->
