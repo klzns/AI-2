@@ -1,0 +1,110 @@
+class Agent:
+  def __init__(self, bridge, action_list, world):
+    self.bridge = bridge
+    self.al = action_list
+    self.world = world
+
+    self.safe = []
+    self.visited = []
+
+    self.energy = 100
+    self.points = 0
+    self.position = (20, 37)
+
+    # 0 east
+    # 1 north
+    # 2 west
+    # 3 south
+    self.direction = 3
+
+    self.update_bridge()
+
+  def add_safe(self, x, y):
+    self.bridge.assert_safe(x, y)
+    self.safe.append((x, y))
+
+  def add_visited(self, x, y):
+    self.bridge.assert_visited(x, y)
+    self.visited.append((x, y))
+
+  def update_bridge(self):
+    self.bridge.assert_on(*self.position)
+    self.bridge.assert_energy(self.energy)
+    self.add_visited(*self.position)
+    if not self.world.is_danger_detected(self.position):
+      for adjacent in self.world.adjacents(self.position):
+        self.add_safe(*adjacent)
+
+  def execute(self, action):
+    action_name = action['Action']
+    arg1 = action['Arg1']
+    arg2 = action['Arg2']
+    action = getattr(self, action_name)
+    action(arg1, arg2)
+    self.update_bridge()
+
+  def pick_rupee(self, arg1, arg2):
+    self.al.append('getRupee')
+    self.points += 10
+
+  def pick_heart(self, arg1, arg2):
+    self.al.append('getHeart')
+    self.points -= 10
+    self.energy += 50
+
+  def pick_sword(self, arg1, arg2):
+    self.points -= 100
+    if 'M' in self.world.tiles[self.position[1]][self.position[0]].items:
+      self.al.append('getSword')
+    else:
+      self.al.append('getFakeSword')
+
+  def turn_left(self):
+    self.al.append('turnLeft')
+
+  def turn_right(self):
+    self.al.append('turnRight')
+
+  def move_forward(self):
+    self.al.append('moveForward')
+
+  def attack(self, arg1, arg2):
+    self.al.append('attack')
+    self.energy -= 10
+
+  def face_direction(self, xx, yy):
+    x, y = self.position
+    assert self.world.distance((x, y), (xx, yy)) == 1, 'New tile not adjacent'
+
+    new_direction = None
+    if xx == x+1:
+      new_direction = 0
+    elif yy == y-1:
+      new_direction = 1
+    elif xx == x-1:
+      new_direction = 2
+    elif yy == y+1:
+      new_direction = 3
+
+    offset = (new_direction - self.direction) % 4
+    if offset == 0:
+      # same direction
+      pass
+    elif offset == 1:
+      self.turn_right()
+    elif offset == 2:
+      self.turn_right()
+      self.turn_right()
+    else: # if offset == 3:
+      self.turn_left()
+
+    self.direction = new_direction
+
+  def walk(self, x, y):
+    assert self.position != (x, y), "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
+    path = self.world.path(self.position, self.direction, (x, y), self.safe)
+    for xx, yy in path:
+      self.face_direction(xx, yy)
+      self.move_forward()
+      self.position = (xx, yy)
+      self.update_bridge()
