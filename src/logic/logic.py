@@ -85,22 +85,17 @@ class Agent:
   def pick_rupee(self, arg1, arg2):
     self.al.append('getRupee')
     self.points += 10
-    self.bridge.retract('item_R(%d, %d)' % self.position)
 
   def pick_heart(self, arg1, arg2):
     self.al.append('getHeart')
     self.points -= 10
     self.energy += 50
-    self.bridge.retract('item_C(%d, %d)' % self.position)
 
   def pick_sword(self, arg1, arg2):
     self.points -= 100
-
     if 'M' in self.world.tiles[self.position[1]][self.position[0]].items:
-      self.bridge.retract('item_M(%d, %d)' % self.position)
       self.al.append('getSword')
     else:
-      self.bridge.retract('item_F(%d, %d)' % self.position)
       self.al.append('getFakeSword')
 
   def turn_left(self):
