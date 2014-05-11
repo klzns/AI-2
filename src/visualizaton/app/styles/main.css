@@ -12,8 +12,19 @@
 .status {
     width: 630px;
     margin: auto;
+    margin-bottom: 5px;
     font-family: 'Triforce';
     color: #fff;
+    background: rgba(150, 150, 150, 0.5);
+}
+
+.zelda-label {
+    color: #E8BC3A;
+}
+.energy-container { position: relative; }
+.energy {
+    position: absolute;
+    right: 0;
 }
 
 .heart-full, .heart-empty {
