@@ -4,8 +4,14 @@
     "moveForward",
     "moveForward",
     "goIntoVortex",
-    "teleport:31,11",
+    "teleport:37,4",
+    "moveForward",
     "turnLeft",
+    "moveForward",
+    "getHeart",
+    "turnLeft",
+    "moveForward",
+    "turnRight",
     "attack",
     "getSword"
 ]

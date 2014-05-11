@@ -63,30 +63,42 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getRupee: () =>
+            @action = ''
             @changeCost(@cost+10)
             oldLink = @getOldLink()
+
+            @removeObject(@x, @y, '.r')
 
             @action = 'get-rupee'
             @render.paintLink(oldLink, @)
 
         getSword: () =>
+            @action = ''
             @changeCost(@cost-100)
             oldLink = @getOldLink()
+
+            @removeObject(@x, @y, '.m')
 
             @action = 'get-sword'
             @render.paintLink(oldLink, @)
 
         getFakeSword: () =>
+            @action = ''
             @changeCost(@cost-100)
             oldLink = @getOldLink()
+
+            @removeObject(@x, @y, '.f')
 
             @action = 'get-sword'
             @render.paintLink(oldLink, @)
 
         getHeart: () =>
+            @action = ''
             @changeCost(@cost-10)
             @changeEnergy(@energy+50)
             oldLink = @getOldLink()
+
+            @removeObject(@x, @y, '.c')
 
             @action = 'get-heart'
             @render.paintLink(oldLink, @)
@@ -99,12 +111,14 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         goIntoVortex: () =>
+            @action = ''
             oldLink = @getOldLink()
 
             @action = 'vortex'
             @render.paintLink(oldLink, @)
 
         getAttacked: () =>
+            @action = ''
             @changeCost(@cost-10000)
             oldLink = @getOldLink()
 
@@ -112,6 +126,7 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         teleport: (x, y) =>
+            @action = ''
             oldLink = @getOldLink()
             @action = ''
             [@x, @y] = [x, y]
@@ -120,6 +135,13 @@ define ['world/render'], (Render) ->
 
         know: (x, y) =>
             @render.getPoint(x, y, 'div').addClass('know')
+
+        removeObject: (x, y, object) =>
+            object = @render.getPoint(x, y, object)
+            if object[0]
+                $(object[0]).remove()
+                return true
+            return false
 
         changeCost: (to) =>
             $('.cost').text(to)

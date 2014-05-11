@@ -9,6 +9,7 @@
         this.getPointForward = __bind(this.getPointForward, this);
         this.changeEnergy = __bind(this.changeEnergy, this);
         this.changeCost = __bind(this.changeCost, this);
+        this.removeObject = __bind(this.removeObject, this);
         this.know = __bind(this.know, this);
         this.teleport = __bind(this.teleport, this);
         this.getAttacked = __bind(this.getAttacked, this);
@@ -91,33 +92,41 @@
 
       Link.prototype.getRupee = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost + 10);
         oldLink = this.getOldLink();
+        this.removeObject(this.x, this.y, '.r');
         this.action = 'get-rupee';
         return this.render.paintLink(oldLink, this);
       };
 
       Link.prototype.getSword = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost - 100);
         oldLink = this.getOldLink();
+        this.removeObject(this.x, this.y, '.m');
         this.action = 'get-sword';
         return this.render.paintLink(oldLink, this);
       };
 
       Link.prototype.getFakeSword = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost - 100);
         oldLink = this.getOldLink();
+        this.removeObject(this.x, this.y, '.f');
         this.action = 'get-sword';
         return this.render.paintLink(oldLink, this);
       };
 
       Link.prototype.getHeart = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost - 10);
         this.changeEnergy(this.energy + 50);
         oldLink = this.getOldLink();
+        this.removeObject(this.x, this.y, '.c');
         this.action = 'get-heart';
         return this.render.paintLink(oldLink, this);
       };
@@ -132,6 +141,7 @@
 
       Link.prototype.goIntoVortex = function() {
         var oldLink;
+        this.action = '';
         oldLink = this.getOldLink();
         this.action = 'vortex';
         return this.render.paintLink(oldLink, this);
@@ -139,6 +149,7 @@
 
       Link.prototype.getAttacked = function() {
         var oldLink;
+        this.action = '';
         this.changeCost(this.cost - 10000);
         oldLink = this.getOldLink();
         this.action = 'damage';
@@ -147,6 +158,7 @@
 
       Link.prototype.teleport = function(x, y) {
         var oldLink, _ref;
+        this.action = '';
         oldLink = this.getOldLink();
         this.action = '';
         _ref = [x, y], this.x = _ref[0], this.y = _ref[1];
@@ -155,6 +167,15 @@
 
       Link.prototype.know = function(x, y) {
         return this.render.getPoint(x, y, 'div').addClass('know');
+      };
+
+      Link.prototype.removeObject = function(x, y, object) {
+        object = this.render.getPoint(x, y, object);
+        if (object[0]) {
+          $(object[0]).remove();
+          return true;
+        }
+        return false;
       };
 
       Link.prototype.changeCost = function(to) {
