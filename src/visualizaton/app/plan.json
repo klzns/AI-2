@@ -1,0 +1,11 @@
+[
+    "moveForward",
+    "turnRight",
+    "moveForward",
+    "moveForward",
+    "goIntoVortex",
+    "teleport:31,11",
+    "turnLeft",
+    "attack",
+    "getSword"
+]

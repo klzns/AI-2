@@ -14,3 +14,21 @@ requirejs ['world/render', 'world/grid', 'agent/link'], (Render, Grid, Link) ->
         link = new Link(20, 37)
         render.paintLink(null, link)
         window.link = link
+        $.get('plan.json')
+            .then (plan) ->
+                for action, i in plan
+                    setTimeout do (action) ->
+                        ->
+                            if action.indexOf('teleport') isnt -1
+                                action = action.split(':')
+                                coords = action[1].split(',')
+                                link.teleport(coords[0], coords[1])
+                            else
+                                link[action]()
+                    , (i*300)
+
+                return
+
+        return
+
+    return
