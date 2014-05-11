@@ -1,3 +1,16 @@
+/* DYNAMIC */
+:- dynamic item_M/2.
+:- dynamic item_F/2.
+:- dynamic item_C/2.
+:- dynamic item_R/2.
+:- dynamic item_B/2.
+:- dynamic item_E/2.
+:- dynamic item_V/2.
+:- dynamic tile_f/2.
+:- dynamic tile_g/2.
+:- dynamic safe/2.
+
+
 item_B(12, 9).
 item_B(16, 27).
 item_B(18, 28).

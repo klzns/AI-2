@@ -1,2 +1,42 @@
-bestAction(move, 1, 2).
-bestAction(say, hi, none).
+/* DYNAMIC */
+:- dynamic safe/2.
+:- dynamic visited/2.
+:- dynamic on/2.
+:- dynamic energy/1.
+
+/* UTILS */
+adjacent(X, Y, XX, Y) :- XX is X+1.
+adjacent(X, Y, XX, Y) :- XX is X-1.
+adjacent(X, Y, X, YY) :- YY is Y+1.
+adjacent(X, Y, X, YY) :- YY is Y-1.
+
+/* DETECTORS */
+/* Can detect swords on the position we are */
+detect_sword(X, Y) :- item_M(X, Y).
+detect_sword(X, Y) :- item_F(X, Y).
+
+/* Can detect hearts on the position we are */
+detect_heart(X, Y) :- item_C(X, Y).
+
+/* Can detect rupees on the position we are */
+detect_rupee(X, Y) :- item_R(X, Y).
+
+/* Can detect holes on adjacent positions */
+detect_hole(X, Y) :- adjacent(X, Y, XX, YY), item_B(XX, YY).
+
+/* Can detect enemies on adjacent positions */
+detect_enemy(X, Y) :- adjacent(X, Y, XX, YY), item_E(XX, YY).
+
+/* Can detect vortex on adjacent positions */
+detect_vortex(X, Y) :- adjacent(X, Y, XX, YY), item_V(XX, YY).
+
+/* INIT */
+on(20, 37).
+energy(100).
+
+/* BEST ACTIONS, IN ORDER OF PREFERENCE */
+best_action(pick_rupee, none1, none2) :- on(X, Y), detect_rupee(X, Y).
+best_action(pick_sword, none1, none2) :- on(X, Y), detect_sword(X, Y).
+best_action(pick_heart, none1, none2) :- on(X, Y), detect_heart(X, Y).
+best_action(walk, X, Y) :- safe(X, Y), not(visited(X, Y)). /* TODO: BFS */
+
