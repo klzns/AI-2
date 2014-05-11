@@ -128,6 +128,18 @@ define ['world/render'], (Render) ->
         know: (x, y) =>
             @render.getPoint(x, y, 'div').addClass('know')
 
+        doPlan: (plan) =>
+            for action, i in plan
+                setTimeout do (action) =>
+                    =>
+                        if action.indexOf('teleport') isnt -1
+                            action = action.split(':')
+                            coords = action[1].split(',')
+                            @teleport(coords[0], coords[1])
+                        else
+                            @[action]()
+                , (i*300)
+
         removeObject: (x, y, object) =>
             object = @render.getPoint(x, y, object)
             if object[0]
