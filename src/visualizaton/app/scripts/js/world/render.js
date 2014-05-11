@@ -38,18 +38,20 @@
       Render.prototype.paintLink = function(oldLink, newLink) {
         var elem;
         if (oldLink) {
-          this.getPoint(oldLink.x, oldLink.y, true).remove();
+          this.getPoint(oldLink.x, oldLink.y, '.link').remove();
         }
-        elem = '<div class="link link-' + newLink.direction + '"></div>';
+        elem = '<div class="link link-' + newLink.direction;
+        elem += ' link-' + newLink.action;
+        elem += '"></div>';
         return this.getPoint(newLink.x, newLink.y).append(elem);
       };
 
-      Render.prototype.getPoint = function(x, y, link) {
-        if (link == null) {
-          link = null;
+      Render.prototype.getPoint = function(x, y, detail) {
+        if (detail == null) {
+          detail = null;
         }
-        if (link) {
-          return $('.map-lost-woods .map-row-' + y + ' .map-col-' + x + ' .link');
+        if (detail) {
+          return $('.map-lost-woods .map-row-' + y + ' .map-col-' + x + ' ' + detail);
         } else {
           return $('.map-lost-woods .map-row-' + y + ' .map-col-' + x);
         }

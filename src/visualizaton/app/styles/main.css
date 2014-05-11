@@ -1,7 +1,37 @@
+@font-face {
+    font-family: 'Triforce';
+    src: url('../fonts/Triforce.ttf');
+}
+
 .main {
     width: 630px;
     padding: 5px 0;
     margin: auto;
+}
+
+.status {
+    width: 630px;
+    margin: auto;
+    font-family: 'Triforce';
+    color: #fff;
+}
+
+.heart-full, .heart-empty {
+    height: 7px;
+    width: 7px;
+    display: inline-block;
+}
+
+.heart-full {
+    background: url("../images/sprite.png") -7px -50px;
+}
+
+.heart-empty {
+    background: url("../images/sprite.png") -15px -50px;
+}
+
+.heart-1, .heart-2, .heart-3 {
+    margin-right: 2px;
 }
 
 .map-lost-woods {
@@ -24,7 +54,7 @@
 
 /* Forest */
 .map-col.f {
-    background: url("../images/sprite.png") #64A42C -86px -30px;
+    background: url("../images/sprite.png") #64A42C -76px -31px;
 }
 
 /* Grass */
@@ -33,13 +63,18 @@
 }
 
 
+/* Fog */
+.map-col div {
+    opacity: 0.3;
+}
+.map-col div.know {
+    opacity: 1;
+}
+
 .map-col .f, .map-col .c , .map-col .r {
-    height: 5px;
-    width: 5px;
     float: left;
     margin: 0;
     padding: 0;
-    z-index: 5;
 }
 .map-col div:nth-child(odd) {
     margin-right: 2px;
@@ -58,14 +93,14 @@
 .map-col .c {
     height: 5px;
     width: 5px;
-    background: url("../images/sprite.png") -72px -95px;
+    background: url("../images/sprite.png") -77px -95px;
 }
 
 /* Rupee */
 .map-col .r {
     height: 6px;
     width: 3px;
-    background: url("../images/sprite.png") -73px -84px;
+    background: url("../images/sprite.png") -78px -84px;
 }
 
 
@@ -94,7 +129,7 @@
     height: 15px;
     width: 15px;
     top: 0;
-    background: url("../images/sprite.png") -37px -86px;
+    background: url("../images/sprite.png") -43px -85px;
 }
 
 /* Master Sword */
@@ -106,13 +141,15 @@
 }
 
 
-.link {
+.map-col .link {
     height: 15px;
     width: 15px;
     position: absolute;
     background-image: url("../images/sprite.png");
     background-repeat: no-repeat;
     margin: 0;
+    z-index: 5;
+    opacity: 1;
 }
 
 .link.link-down {
@@ -121,12 +158,24 @@
     bottom: 0;
     background-position: -59px 0;
 }
+.link.link-down.link-attack {
+    height: 24px;
+    width: 15px;
+    top: 0;
+    background-position: -57px -53px;
+}
 
 .link.link-up {
     height: 18px;
     width: 12px;
     bottom: 0;
     background-position: -87px 0;
+}
+.link.link-up.link-attack {
+    height: 27px;
+    width: 15px;
+    bottom: 0;
+    background-position: -86px -50px;
 }
 
 .link.link-left {
@@ -135,6 +184,12 @@
     bottom: 0;
     background-position: -34px 0;
 }
+.link.link-left.link-attack {
+    width: 24px;
+    height: 16px;
+    right: 0;
+    background-position: 0 -61px;
+}
 
 .link.link-right {
     height: 18px;
@@ -142,21 +197,68 @@
     bottom: 0;
     background-position: -5px 0;
 }
-
-@font-face {
-  font-family: 'Triforce';
-  src: url('../fonts/Triforce.ttf');
+.link.link-right.link-attack {
+    width: 24px;
+    height: 16px;
+    left: 0;
+    background-position: -28px -61px;
 }
 
+.link.link-get-rupee {
+    height: 24px;
+    width: 12px;
+    bottom: 0;
+    background-position: -15px -22px;
+}
+
+.link.link-get-sword {
+    height: 27px;
+    width: 13px;
+    bottom: 0;
+    background-position: -33px -19px;
+}
+
+.link.link-get-heart {
+    height: 22px;
+    width: 12px;
+    bottom: 0;
+    background-position: -2px -24px;
+}
+
+.link.link-falling {
+    height: 15px;
+    width: 15px;
+    top: 0;
+    left: 0;
+    background-position: -24px -88px;
+}
+
+.link.link-vortex {
+    height: 15px;
+    width: 15px;
+    top: 0;
+    left: 0;
+    background-position: -59px -85px;
+}
+
+.link.link-damage {
+    height: 17px;
+    width: 18px;
+    left: 0;
+    bottom: 0;
+    background-position: -92px -30px;
+}
+
+
 body {
-  padding-top: 5px;
-  padding-bottom: 20px;
-  background: url("../images/background.jpg") center 0 no-repeat #af8e2d;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    background: url("../images/background.jpg") center 0 no-repeat #af8e2d;
 }
 
 .header {
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Custom page footer */
@@ -171,19 +273,19 @@ body {
 }
 
 .main {
-  margin-top: -100px;
-  border-top: 30px solid #245e37;
-  background: rgba(44, 44, 44, 0.5);
-  z-index: 10;
-  position: relative;
+    margin-top: -100px;
+    border-top: 30px solid #245e37;
+    background: rgba(44, 44, 44, 0.5);
+    z-index: 10;
+    position: relative;
 }
 
 .logo {
-  width: 342px;
-  margin: auto;
-  display: block;
-  z-index: 5;
-  position: relative;
+    width: 342px;
+    margin: auto;
+    display: block;
+    z-index: 5;
+    position: relative;
 }
 
 /* Responsive: Portrait tablets and up */

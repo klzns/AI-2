@@ -19,13 +19,16 @@ define ['world/map'], (Map) ->
 
         paintLink: (oldLink, newLink) =>
             if oldLink
-                @getPoint(oldLink.x, oldLink.y, true).remove()
+                @getPoint(oldLink.x, oldLink.y, '.link').remove()
 
-            elem = '<div class="link link-'+newLink.direction+'"></div>'
+
+            elem = '<div class="link link-'+newLink.direction
+            elem += ' link-'+newLink.action
+            elem += '"></div>'
             @getPoint(newLink.x, newLink.y).append(elem)
 
-        getPoint: (x, y, link = null) ->
-            if link
-                return $('.map-lost-woods .map-row-'+y+' .map-col-'+x+' .link')
+        getPoint: (x, y, detail = null) ->
+            if detail
+                $('.map-lost-woods .map-row-'+y+' .map-col-'+x+' '+detail)
             else
-                return $('.map-lost-woods .map-row-'+y+' .map-col-'+x)
+                $('.map-lost-woods .map-row-'+y+' .map-col-'+x)
