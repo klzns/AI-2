@@ -11,7 +11,6 @@ define ['world/render'], (Render) ->
 
         turnLeft: () =>
             @changeCost(@cost-1)
-            @action = ''
             oldLink = @getOldLink()
 
             if @direction is 'up'
@@ -27,7 +26,6 @@ define ['world/render'], (Render) ->
 
         turnRight: () =>
             @changeCost(@cost-1)
-            @action = ''
             oldLink = @getOldLink()
 
             if @direction is 'up'
@@ -43,7 +41,6 @@ define ['world/render'], (Render) ->
 
         moveForward: () =>
             @changeCost(@cost-1)
-            @action = ''
             oldLink = @getOldLink()
 
             [@x, @y] = @getPointForward()
@@ -63,7 +60,6 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getRupee: () =>
-            @action = ''
             @changeCost(@cost+10)
             oldLink = @getOldLink()
 
@@ -73,7 +69,6 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getSword: () =>
-            @action = ''
             @changeCost(@cost-100)
             oldLink = @getOldLink()
 
@@ -83,7 +78,6 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getFakeSword: () =>
-            @action = ''
             @changeCost(@cost-100)
             oldLink = @getOldLink()
 
@@ -93,7 +87,6 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         getHeart: () =>
-            @action = ''
             @changeCost(@cost-10)
             @changeEnergy(@energy+50)
             oldLink = @getOldLink()
@@ -104,7 +97,6 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         fallDownHole: () =>
-            @action = ''
             @changeCost(@cost-10000)
             @changeEnergy(0)
             oldLink = @getOldLink()
@@ -113,14 +105,12 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         goIntoVortex: () =>
-            @action = ''
             oldLink = @getOldLink()
 
             @action = 'vortex'
             @render.paintLink(oldLink, @)
 
         getAttacked: () =>
-            @action = ''
             @changeCost(@cost-10000)
             @changeEnergy(0)
             oldLink = @getOldLink()
@@ -129,9 +119,7 @@ define ['world/render'], (Render) ->
             @render.paintLink(oldLink, @)
 
         teleport: (x, y) =>
-            @action = ''
             oldLink = @getOldLink()
-            @action = ''
             [@x, @y] = [x, y]
 
             @render.paintLink(oldLink, @)
@@ -192,6 +180,7 @@ define ['world/render'], (Render) ->
             return [x, y]
 
         getOldLink: () =>
+            @action = ''
             oldLink =
                 x: @x
                 y: @y
