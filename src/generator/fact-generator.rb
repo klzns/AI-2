@@ -14,24 +14,25 @@ item_str.each_line do |line|
   map.tile(x, y).place(item)
 end
 
-puts """
-/* DYNAMIC */
-:- dynamic item_M/2.
-:- dynamic item_F/2.
-:- dynamic item_C/2.
-:- dynamic item_R/2.
-:- dynamic item_B/2.
-:- dynamic item_E/2.
-:- dynamic item_V/2.
-:- dynamic tile_f/2.
-:- dynamic tile_g/2.
-:- dynamic safe/2.
-
-"""
+lines = [
+"/* DYNAMIC */",
+":- dynamic item_M/2.",
+":- dynamic item_F/2.",
+":- dynamic item_C/2.",
+":- dynamic item_R/2.",
+":- dynamic item_B/2.",
+":- dynamic item_E/2.",
+":- dynamic item_V/2.",
+":- dynamic tile_f/2.",
+":- dynamic tile_g/2.",
+":- dynamic safe/2."
+]
 
 map.each_tile do |tile, x, y|
-  puts "tile_#{tile.kind}(#{x}, #{y})."
+  lines.push "tile_#{tile.kind}(#{x}, #{y})."
   tile.items.each do |item|
-    puts "item_#{item}(#{x}, #{y})."
+    lines.push "item_#{item}(#{x}, #{y})."
   end
 end
+
+puts lines.sort
