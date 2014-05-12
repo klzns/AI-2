@@ -4,9 +4,6 @@ class Agent:
     self.al = action_list
     self.world = world
 
-    self.safe = []
-    self.visited = []
-
     self.energy = 100
     self.points = 0
     self.position = (20, 37)
@@ -21,11 +18,9 @@ class Agent:
 
   def add_safe(self, x, y):
     self.bridge.assert_safe(x, y)
-    self.safe.append((x, y))
 
   def add_visited(self, x, y):
     self.bridge.assert_visited(x, y)
-    self.visited.append((x, y))
 
   def update_bridge(self):
     self.bridge.assert_on(*self.position)
@@ -72,6 +67,9 @@ class Agent:
     self.al.append('attack')
     self.energy -= 10
 
+  def get_safe(self):
+    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("safe(X, Y)"))]
+
   def face_direction(self, xx, yy):
     x, y = self.position
     assert self.world.distance((x, y), (xx, yy)) == 1, 'New tile not adjacent'
@@ -102,7 +100,9 @@ class Agent:
 
   def walk(self, x, y):
     assert self.position != (x, y), "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
-    path = self.world.path(self.position, self.direction, (x, y), self.safe)
+
+    safe = self.get_safe()
+    path = self.world.path(self.position, self.direction, (x, y), safe)
     for xx, yy in path:
       self.face_direction(xx, yy)
       self.move_forward()
