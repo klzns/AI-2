@@ -41,7 +41,7 @@ define ['world/render'], (Render) ->
 
         moveForward: () =>
             oldLink = @getOldLink()
-            @changeCost(@cost-10)
+            @changeCost(@cost-1)
 
             [@x, @y] = @getPointForward()
 
