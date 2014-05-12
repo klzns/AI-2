@@ -14,11 +14,16 @@ agent = Agent(bridge, action_list, world)
 while True:
   try:
     action = bridge.best_action()
-    #print action
+    print action
     agent.execute(action)
   except IndexError:
     #print "NO MORE ACTIONS, ABORTING"
     break 
+  except BaseException:
+    print 'prolog error...'
+    while True:
+      query = raw_input('?- ')
+      print list(bridge.prolog.query(query))
   if action_list[-1] == 'getSword':
     #print 'FIN! GOT THE SWORD :)'
     break
@@ -30,6 +35,6 @@ while True:
 #print 'Action JSON:'
 print json.dumps(action_list)
 
-#while True:
- # query = raw_input('?- ')
-  #print list(bridge.prolog.query(query))
+while True:
+  query = raw_input('?- ')
+  print list(bridge.prolog.query(query))
