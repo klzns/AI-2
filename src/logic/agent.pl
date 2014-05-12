@@ -6,10 +6,10 @@
 :- dynamic energy/1.
 
 /* UTILS */
-adjacent(X, Y, XX, Y) :- XX is X+1.
-adjacent(X, Y, XX, Y) :- XX is X-1.
-adjacent(X, Y, X, YY) :- YY is Y+1.
-adjacent(X, Y, X, YY) :- YY is Y-1.
+adjacent(X, Y, XX, Y) :- XX is X+1, tile_g(XX, Y).
+adjacent(X, Y, XX, Y) :- XX is X-1, tile_g(XX, Y).
+adjacent(X, Y, X, YY) :- YY is Y+1, tile_g(X, YY).
+adjacent(X, Y, X, YY) :- YY is Y-1, tile_g(X, YY).
 
 /* DETECTORS */
 /* Can detect swords on the position we are */
