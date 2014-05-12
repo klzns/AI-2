@@ -74,9 +74,9 @@ class Agent:
     self.walk(*starting)
 
     self.face_direction(x, y)
-
     self.al.append('attack')
     self.energy -= 10
+    self.world.tile((x, y)).remove_item('E')
 
     self.add_safe(x, y)
     self.walk(x, y)
@@ -116,6 +116,7 @@ class Agent:
     self.direction = new_direction
 
   def walk(self, x, y):
+    self.update_bridge()
     if self.position == (x, y):
       return
       #raise "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
