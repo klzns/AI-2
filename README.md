@@ -23,11 +23,16 @@ Make sure the binaries of these tools are available on your PATH.
 
 Also, make sure all of [SWI-Prolog, Python, Pyswip] are the same architechture (x86 or x64).
 
-
 Then, at the project root, run the following commands:
 
 ```
 .\run.bat
+```
+
+However, if you want to use custom `map.txt` and `items.txt`, place them in `src` and run this one instead:
+
+```
+.\run-custom.bat
 ```
 
 
