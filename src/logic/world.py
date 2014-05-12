@@ -15,38 +15,57 @@ class World:
         return True
     return False
 
-  def path(self, start, direction, end, safe):
+  def astar(self, start, end, safe):
     frontier = [{'pos': start, 'history': [], 'dist': self.distance(start, end)}]
 
     while True:
       state = frontier.pop()
-
+      
       if state['dist'] == 0:
         # print 'HISTORY from %s to %s' % (start, end), state['history']
         return state['history']
 
       for adjacent in self.adjacents(state['pos'], safe):
-        new_history = list(state['history'])
-        new_history.append(adjacent)
-        frontier.append({
-          'pos': adjacent, 
-          'history': new_history, 
-          'dist': self.distance(adjacent, end)
-        })
+        if len([f for f in frontier if f['pos'] == adjacent]) == 0:
+          new_history = list(state['history'])
+          new_history.append(adjacent)
+          frontier.append({
+            'pos': adjacent, 
+            'history': new_history, 
+            'dist': self.distance(adjacent, end)
+          })
       frontier.sort(key=lambda x: -x['dist'])
+
+  def bfs(self, start, end, safe):
+    frontier = [{'pos': start, 'history': [], 'dist': self.distance(start, end)}]
+
+    while True:
+      state = frontier.pop(0)
+      
+      if state['dist'] == 0:
+        # print 'HISTORY from %s to %s' % (start, end), state['history']
+        return state['history']
+
+      for adjacent in self.adjacents(state['pos'], safe):
+        if len([f for f in frontier if f['pos'] == adjacent]) == 0:
+          new_history = list(state['history'])
+          new_history.append(adjacent)
+          frontier.append({
+            'pos': adjacent, 
+            'history': new_history, 
+            'dist': self.distance(adjacent, end)
+          })
+
+
+  def path(self, start, end, safe):
+    return self.bfs(start, end, safe)
 
   def distance(self, start, end):
     return abs(end[0] - start[0]) + abs(end[1] - start[1])
 
-  def neighbors(self, pos, safe = None):
+  def tile(self, pos):
     x, y = pos
-    neighs = [(x-1, y-1), (x, y-1), (x+1, y-1),
-              (x-1, y  ),           (x+1, y  ),
-              (x-1, y+1), (x, y+1), (x+1, y+1)]
-    if safe == None:
-      return [neigh for neigh in neighs]
-    else:
-      return [neigh for neigh in neighs if neigh in safe]
+    return self.tiles[y][x]
 
   def adjacents(self, pos, safe = None):
     x, y = pos
@@ -54,6 +73,6 @@ class World:
               (x-1, y), (x+1, y),
                     (x, y+1)]
     if safe == None:
-      return [neigh for neigh in neighs]
+      return [neigh for neigh in neighs if self.tile(neigh).kind == 'g']
     else:
-      return [neigh for neigh in neighs if neigh in safe]
+      return [neigh for neigh in neighs if self.tile(neigh).kind == 'g' and neigh in safe]

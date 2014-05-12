@@ -41,7 +41,7 @@ define ['world/render'], (Render) ->
 
         moveForward: () =>
             oldLink = @getOldLink()
-            @changeCost(@cost-1)
+            @changeCost(@cost-10)
 
             [@x, @y] = @getPointForward()
 
@@ -138,7 +138,7 @@ define ['world/render'], (Render) ->
                             @teleport(coords[0], coords[1])
                         else
                             @[action]()
-                , (i*300)
+                , (i*30)
 
         removeObject: (x, y, object) =>
             object = @render.getPoint(x, y, object)

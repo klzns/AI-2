@@ -89,12 +89,12 @@ class Agent:
       # same direction
       pass
     elif offset == 1:
-      self.turn_right()
-    elif offset == 2:
-      self.turn_right()
-      self.turn_right()
-    else: # if offset == 3:
       self.turn_left()
+    elif offset == 2:
+      self.turn_left()
+      self.turn_left()
+    else: # if offset == 3:
+      self.turn_right()
 
     self.direction = new_direction
 
@@ -102,7 +102,7 @@ class Agent:
     assert self.position != (x, y), "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
 
     safe = self.get_safe()
-    path = self.world.path(self.position, self.direction, (x, y), safe)
+    path = self.world.path(self.position, (x, y), safe)
     for xx, yy in path:
       self.face_direction(xx, yy)
       self.move_forward()

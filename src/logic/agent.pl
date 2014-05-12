@@ -41,4 +41,9 @@ safe(20, 37).
 best_action(pick_rupee, none1, none2) :- on(X, Y), detect_rupee(X, Y), retract(item_R(X, Y)).
 best_action(pick_sword, none1, none2) :- on(X, Y), detect_sword(X, Y), retract(item_M(X, Y)), retract(item_F(X, Y)).
 best_action(pick_heart, none1, none2) :- on(X, Y), detect_heart(X, Y), energy(E), E < 100, retract(item_C(X, Y)).
-best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y). /* TODO: BFS */
+
+best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y), adjacent(X, Y, XX, YY).
+best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y).
+
+best_attack(attack, X, Y) :- adjacent(X, Y, XX, YY), visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)).
+
