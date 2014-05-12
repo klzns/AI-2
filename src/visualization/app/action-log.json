@@ -1,0 +1,35 @@
+{'Action': 'walk', 'Arg1': 20, 'Arg2': 36}
+{'Action': 'walk', 'Arg1': 19, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 20, 'Arg2': 38}
+{'Action': 'walk', 'Arg1': 20, 'Arg2': 35}
+{'Action': 'walk', 'Arg1': 19, 'Arg2': 36}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 36}
+{'Action': 'walk', 'Arg1': 18, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 19, 'Arg2': 38}
+{'Action': 'walk', 'Arg1': 22, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 39}
+{'Action': 'walk', 'Arg1': 20, 'Arg2': 39}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 35}
+{'Action': 'walk', 'Arg1': 22, 'Arg2': 36}
+{'Action': 'walk', 'Arg1': 18, 'Arg2': 38}
+{'Action': 'walk', 'Arg1': 19, 'Arg2': 39}
+{'Action': 'walk', 'Arg1': 23, 'Arg2': 38}
+{'Action': 'pick_heart', 'Arg1': 'none1', 'Arg2': 'none2'}
+{'Action': 'walk', 'Arg1': 23, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 22, 'Arg2': 40}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 40}
+{'Action': 'walk', 'Arg1': 20, 'Arg2': 40}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 34}
+{'Action': 'walk', 'Arg1': 22, 'Arg2': 35}
+{'Action': 'walk', 'Arg1': 23, 'Arg2': 36}
+{'Action': 'walk', 'Arg1': 17, 'Arg2': 38}
+{'Action': 'walk', 'Arg1': 17, 'Arg2': 39}
+{'Action': 'walk', 'Arg1': 18, 'Arg2': 40}
+{'Action': 'walk', 'Arg1': 19, 'Arg2': 40}
+{'Action': 'walk', 'Arg1': 24, 'Arg2': 38}
+{'Action': 'walk', 'Arg1': 24, 'Arg2': 37}
+{'Action': 'walk', 'Arg1': 21, 'Arg2': 41}
+NO MORE ACTIONS, ABORTING
+Action JSON:
+['turnRight', 'turnRight', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'turnLeft', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'getHeart', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward', 'turnRight', 'turnRight', 'moveForward', 'moveForward', 'turnLeft', 'moveForward', 'moveForward', 'turnRight', 'moveForward', 'turnLeft', 'moveForward', 'turnRight', 'moveForward']
