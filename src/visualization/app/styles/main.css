@@ -75,11 +75,15 @@
 
 
 /* Fog */
-.map-col div {
-    opacity: 0.3;
-}
-.map-col div.know {
-    opacity: 1;
+.map-col .fog {
+    height: 15px;
+    width: 15px;
+    border-radius: 2px;
+    background: rgba(150,150,150,0.85);
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    z-index: 10;
 }
 
 .map-col .f, .map-col .c , .map-col .r {

@@ -8,6 +8,9 @@ define ['world/map'], (Map) ->
             for row, y in @map
                 for col, x in row
                     @getPoint(x, y).addClass(col)
+                    if col is 'g'
+                        @getPoint(x, y).append('<div class="fog"></div>')
+
 
             for item in @items
                 currentItem = item.split('\ ')
@@ -21,6 +24,8 @@ define ['world/map'], (Map) ->
             if oldLink
                 @getPoint(oldLink.x, oldLink.y, '.link').remove()
 
+            fog = @getPoint(newLink.x, newLink.y, '.fog')
+                .fadeOut('fast', -> $(this).remove())
 
             elem = '<div class="link link-'+newLink.direction
             elem += ' link-'+newLink.action
