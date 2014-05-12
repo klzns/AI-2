@@ -8,60 +8,70 @@ class Agent:
     self.points = 0
     self.position = (20, 37)
 
-    # 0 east
-    # 1 north
-    # 2 west
-    # 3 south
+    # 0 east, 1 north, 2 west, 3 south
+    # think of it as 0pi/2, 1pi/2, 2pi/2, 3pi/2
     self.direction = 3
 
     self.update_bridge()
-
-  def add_safe(self, x, y):
-    self.bridge.assert_safe(x, y)
-
-  def add_visited(self, x, y):
-    self.bridge.assert_visited(x, y)
 
   def update_life(self):
     if self.world.tile(self.position).is_deadly():
       self.energy = 0
 
   def update_bridge(self):
+    # Calls assertions on the Prolog bridge for the new position, perceptions, etc
+    perceptions = self.world.get_perceptions(self.position)
+    self.bridge.assert_perceptions(perceptions, *self.position)
     self.bridge.assert_on(*self.position)
-    self.bridge.assert_safe(*self.position)
     self.bridge.assert_energy(self.energy)
-    self.add_visited(*self.position)
-    if not self.world.is_danger_detected(self.position):
-      for adjacent in self.world.adjacents(self.position):
-        self.add_safe(*adjacent)
 
   def execute(self, action):
+    # Call the function with the same name as the action
     action_name = action['Action']
     arg1 = action['Arg1']
     arg2 = action['Arg2']
+
     action = getattr(self, action_name)
     action(arg1, arg2)
+
     self.update_life()
     self.update_bridge()
 
+  def get_safe(self):
+    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("safe(X, Y)"))]
+
+  def get_visited(self):
+    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("visited(X, Y)"))]
+
+###########
+# ACTIONS #
+###########
   def pick_rupee(self, x, y):
     self.walk(x, y)
+
     self.al.append('getRupee')
+    self.world.tile(self.position).remove_item('R')
     self.points += 10
 
   def pick_heart(self, x, y):
     self.walk(x, y)
+
     self.al.append('getHeart')
+    self.world.tile(self.position).remove_item('C')
     self.points -= 10
     self.energy = min(self.energy + 50, 100)
 
   def pick_sword(self, x, y):
     self.walk(x, y)
     self.points -= 100
-    if 'M' in self.world.tiles[self.position[1]][self.position[0]].items:
+
+    if self.world.tile(self.position).has_item('M'):
       self.al.append('getSword')
     else:
       self.al.append('getFakeSword')
+      
+    self.world.tile(self.position).remove_item('M')
+    self.world.tile(self.position).remove_item('F')
 
   def turn_left(self):
     self.al.append('turnLeft')
@@ -73,38 +83,33 @@ class Agent:
     self.al.append('moveForward')
 
   def attack(self, x, y):
+    # We wish to attack the tile at x,y
+    # First, use ASTAR to walk to a safe tile adjacent to x,y
     safe = self.get_safe()
-    possible_starting = [pos for pos in safe if pos in self.world.adjacents((x, y), safe)]
+    adjacents = self.world.adjacents((x, y), safe)
+    adjacent = adjacents[0]
+    self.walk(*adjacent)
 
-    starting = possible_starting[0]
-    self.walk(*starting)
-
+    # Face the monster and attack it!
     self.face_direction(x, y)
     self.al.append('attack')
     self.energy -= 10
     self.world.tile((x, y)).remove_item('E')
 
-    self.add_safe(x, y)
-    self.walk(x, y)
+    self.bridge.assert_attacked(x, y)
 
-  def get_safe(self):
-    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("safe(X, Y)"))]
-
-  def get_visited(self):
-    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("visited(X, Y)"))]
+    self.update_bridge()
 
   def face_direction(self, xx, yy):
     x, y = self.position
-    assert self.world.distance((x, y), (xx, yy)) == 1, 'New tile not adjacent'
 
-    new_direction = None
-    if xx == x+1:
+    if xx > x:
       new_direction = 0
-    elif yy == y-1:
+    elif yy < y:
       new_direction = 1
-    elif xx == x-1:
+    elif xx < x:
       new_direction = 2
-    elif yy == y+1:
+    elif yy > y:
       new_direction = 3
 
     offset = (new_direction - self.direction) % 4
@@ -121,33 +126,42 @@ class Agent:
 
     self.direction = new_direction
 
-  def walk(self, x, y, use_safe = True):
+  def walk(self, x, y, more_safe = None):
     if self.position == (x, y):
+      # Same direction
       return
-      #raise "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
 
-    if use_safe:
-      safe = self.get_safe()
-    else:
-      safe = None
+    safe = self.get_safe()
+
+    if more_safe:
+      for m in more_safe:
+        safe.append(m)
 
     path = self.world.path(self.position, (x, y), safe)
     for xx, yy in path:
       self.face_direction(xx, yy)
       self.move_forward()
       self.position = (xx, yy)
-      self.update_bridge()
-
-  def teleport(self, x, y):
-    self.bridge.retractall('safe(X, Y)')
-    self.position = (x, y)
-    self.al.append('teleport:%d,%d' % (x, y))
+      if (xx, yy) != path[-1]:
+        self.update_bridge()
 
   def walk_into_vortex(self, x, y):
-    self.walk(x, y, use_safe = False)
+    # Walk into the vortex
+    self.walk(x, y, (x, y))
+    self.update_bridge()
+
     xr, yr = self.world.random_position()
+    print xr, yr
+    self.position = (xr, yr)
+
+    # Sadly, we have to retract all connex in order
+    # to make sane decisions about where to walk.
+    # This is because we may end up in a disconnex region
+    # from where we were.
+    self.bridge.retractall('connex(X, Y)')
+
     self.al.append('goIntoVortex')
-    self.teleport(xr, yr)
+    self.al.append('teleport:%d,%d' % (xr, yr))
 
   def dead (self, arg1, arg2):
     self.al.append('getAttacked')

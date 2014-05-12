@@ -9,11 +9,8 @@ class Tile:
   def remove_item(self, item):
   	self.items = [i for i in self.items if i != item]
 
-  def is_safe(self):
-    return not self.is_danger()
-
-  def is_danger(self):
-    return 'B' in self.items or 'E' in self.items or 'V' in self.items
+  def has_item(self, item):
+    return item in self.items
 
   def is_deadly(self):
-    return 'B' in self.items or 'E' in self.items
+    return self.has_item('B') or self.has_item('E')
