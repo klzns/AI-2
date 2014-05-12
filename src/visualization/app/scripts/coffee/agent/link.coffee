@@ -54,6 +54,8 @@ define ['world/render'], (Render) ->
             monster = @render.getPoint(x, y, '.e')
             if monster[0]
                 $(monster[0]).fadeOut('slow', -> $(this).remove())
+
+            @changeCost(@cost-5)
             @changeEnergy(@energy-10)
 
             @action = 'attack'
@@ -138,7 +140,7 @@ define ['world/render'], (Render) ->
                             @teleport(coords[0], coords[1])
                         else
                             @[action]()
-                , (i*10)
+                , (i*30)
 
         removeObject: (x, y, object) =>
             object = @render.getPoint(x, y, object)
