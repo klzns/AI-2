@@ -19,9 +19,11 @@ class Bridge:
     return list(self.prolog.query("retractall(%s)" % what))
 
   def assert_safe(self, x, y):
+    self.retract('safe(%d, %d)' % (x, y))
     self.assertz('safe(%d, %d)' % (x, y))
 
   def assert_visited(self, x, y):
+    self.retract('visited(%d, %d)' % (x, y))
     self.assertz('visited(%d, %d)' % (x, y))
 
   def assert_on(self, x, y):
