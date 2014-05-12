@@ -39,11 +39,19 @@ visited(20, 37).
 safe(20, 37).
 
 /* BEST ACTIONS, IN ORDER OF PREFERENCE */
-best_action(pick_rupee, none1, none2) :- on(X, Y), detect_rupee(X, Y), retract(item_R(X, Y)).
-best_action(pick_sword, none1, none2) :- on(X, Y), detect_sword(X, Y), retract(item_M(X, Y)), retract(item_F(X, Y)).
-best_action(pick_heart, none1, none2) :- on(X, Y), detect_heart(X, Y), energy(E), E < 100, retract(item_C(X, Y)).
+/* pick stuff up */
+best_action(pick_rupee, X, Y) :- tile_g(X, Y), on(X, Y), detect_rupee(X, Y), retract(item_R(X, Y)).
+best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), detect_sword(X, Y), retract(item_M(X, Y)), retract(item_F(X, Y)).
+best_action(pick_heart, X, Y) :- tile_g(X, Y), on(X, Y), detect_heart(X, Y), energy(E), E < 71, retract(item_C(X, Y)).
 
-best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y), adjacent(X, Y, XX, YY).
-best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y).
+/* walk near */
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), adjacent(X, Y, XX, YY).
 
-best_action(attack, X, Y) :- tile_g(X, Y), visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY).
+/* walk wherever */
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)).
+
+/* low on energy and want to attack */
+/*best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), detect_energy(X, Y).*/
+
+/* no more open paths, attack! */
+best_action(attack, X, Y) :- tile_g(X, Y), energy(E), E > 9, visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY), retract(item_E(X, Y)).

@@ -17,7 +17,7 @@ while True:
     print action
     agent.execute(action)
   except IndexError:
-    #print "NO MORE ACTIONS, ABORTING"
+    print "NO MORE ACTIONS, ABORTING"
     break 
   except BaseException:
     print 'prolog error...'
@@ -25,7 +25,7 @@ while True:
       query = raw_input('?- ')
       print list(bridge.prolog.query(query))
   if action_list[-1] == 'getSword':
-    #print 'FIN! GOT THE SWORD :)'
+    print 'FIN! GOT THE SWORD :)'
     break
   #print action_list
   #print 'on', list(bridge.prolog.query("on(X, Y)"))

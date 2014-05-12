@@ -38,16 +38,19 @@ class Agent:
     action(arg1, arg2)
     self.update_bridge()
 
-  def pick_rupee(self, arg1, arg2):
+  def pick_rupee(self, x, y):
+    self.walk(x, y)
     self.al.append('getRupee')
     self.points += 10
 
-  def pick_heart(self, arg1, arg2):
+  def pick_heart(self, x, y):
+    self.walk(x, y)
     self.al.append('getHeart')
     self.points -= 10
     self.energy += 50
 
-  def pick_sword(self, arg1, arg2):
+  def pick_sword(self, x, y):
+    self.walk(x, y)
     self.points -= 100
     if 'M' in self.world.tiles[self.position[1]][self.position[0]].items:
       self.al.append('getSword')
@@ -63,12 +66,26 @@ class Agent:
   def move_forward(self):
     self.al.append('moveForward')
 
-  def attack(self, arg1, arg2):
+  def attack(self, x, y):
+    safe = self.get_safe()
+    possible_starting = [pos for pos in safe if pos in self.world.adjacents((x, y), safe)]
+
+    starting = possible_starting[0]
+    self.walk(*starting)
+
+    self.face_direction(x, y)
+
     self.al.append('attack')
     self.energy -= 10
 
+    self.add_safe(x, y)
+    self.walk(x, y)
+
   def get_safe(self):
     return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("safe(X, Y)"))]
+
+  def get_visited(self):
+    return [(s['X'], s['Y']) for s in list(self.bridge.prolog.query("visited(X, Y)"))]
 
   def face_direction(self, xx, yy):
     x, y = self.position
@@ -99,7 +116,9 @@ class Agent:
     self.direction = new_direction
 
   def walk(self, x, y):
-    assert self.position != (x, y), "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
+    if self.position == (x, y):
+      return
+      #raise "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
 
     safe = self.get_safe()
     path = self.world.path(self.position, (x, y), safe)
