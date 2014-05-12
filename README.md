@@ -35,8 +35,8 @@ ruby generator/item-generator.rb > items.txt`
 # map.txt + items.txt + fact-generator.rb ==> facts.pl
 ruby generator/fact-generator.rb > facts.pl
 
-# facts.pl + agent.py ==> action-log.json
-python logic/agent.py > action-log.json
+# facts.pl + logic.py ==> action-log.json
+python logic/logic.py > action-log.json
 
 # action-log.json + gulp ==> localhost:9000
 gulp watch
