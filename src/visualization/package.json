@@ -34,8 +34,7 @@
     "title": "node-webkit demo",
     "toolbar": false,
     "frame": true,
-    "width": 1300,
-    "height": 900,
+    "fullscreen": true,
     "position": "center",
     "resizable": false
   },
