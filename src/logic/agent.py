@@ -47,7 +47,7 @@ class Agent:
     self.walk(x, y)
     self.al.append('getHeart')
     self.points -= 10
-    self.energy += 50
+    self.energy = min(self.energy + 50, 100)
 
   def pick_sword(self, x, y):
     self.walk(x, y)

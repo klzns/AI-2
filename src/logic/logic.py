@@ -15,6 +15,7 @@ while True:
   try:
     action = bridge.best_action()
     print action
+    print agent.energy
     agent.execute(action)
   except IndexError:
     print "NO MORE ACTIONS, ABORTING"
