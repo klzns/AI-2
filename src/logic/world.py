@@ -1,4 +1,7 @@
 from tile import Tile
+import random
+
+random.seed(7003)
 
 class World:
   def __init__(self, map_str, item_str):
@@ -7,6 +10,12 @@ class World:
     for item_line in item_str:
       y, x, item = item_line.split(' ')
       self.tiles[int(y)][int(x)].add_item(item.strip())
+
+  def random_position(self):
+    while True:
+      rpos = (random.randint(0, 41), random.randint(0, 41))
+      if self.tile(rpos).kind == 'g':
+        return rpos
 
   def is_danger_detected(self, pos):
     for adjacent in self.adjacents(pos):

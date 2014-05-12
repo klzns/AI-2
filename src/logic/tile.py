@@ -15,3 +15,5 @@ class Tile:
   def is_danger(self):
     return 'B' in self.items or 'E' in self.items or 'V' in self.items
 
+  def is_deadly(self):
+    return 'B' in self.items or 'E' in self.items

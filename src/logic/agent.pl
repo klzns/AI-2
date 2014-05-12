@@ -39,11 +39,14 @@ visited(20, 37).
 safe(20, 37).
 
 /* BEST ACTIONS, IN ORDER OF PREFERENCE */
+/* He's dead, Jim. */
+best_action(dead, none1, none2) :- energy(E), E < 1.
+
 /* pick stuff up */
 best_action(pick_rupee, X, Y) :- tile_g(X, Y), on(X, Y), detect_rupee(X, Y), retract(item_R(X, Y)).
 best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), detect_sword(X, Y), retract(item_M(X, Y)).
 best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), detect_sword(X, Y), retract(item_F(X, Y)).
-best_action(pick_heart, X, Y) :- tile_g(X, Y), on(X, Y), detect_heart(X, Y), energy(E), E < 71, retract(item_C(X, Y)).
+best_action(pick_heart, X, Y) :- tile_g(X, Y), on(X, Y), detect_heart(X, Y), energy(E), E < 51, retract(item_C(X, Y)).
 
 /* walk near */
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), adjacent(X, Y, XX, YY).
@@ -52,7 +55,11 @@ best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)).
 
 /* low on energy and want to attack */
-best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), detect_heart(X, Y).
+best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), detect_heart(X, Y), retract(item_C(X, Y)).
 
 /* no more open paths, attack! */
-best_action(attack, X, Y) :- tile_g(X, Y), energy(E), E > 9, visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY), retract(item_E(X, Y)).
+best_action(attack, X, Y) :- tile_g(X, Y), tile_g(XX, YY), energy(E), E > 10, visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY), retract(item_E(X, Y)).
+
+
+/* no more energy to attack, risk going into vortex... */
+best_action(walk_into_vortex, X, Y) :- tile_g(X, Y), not(on(X, Y)), tile_g(XX, YY), adjacent(X, Y, XX, YY), visited(XX, YY), detect_vortex(XX, YY).

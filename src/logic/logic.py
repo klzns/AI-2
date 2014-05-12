@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import json
+
 from bridge import Bridge
 from agent import Agent
 from world import World
 
-import json
 
 bridge = Bridge()
 world = World(open('map.txt'), open('items.txt'))
@@ -15,18 +16,20 @@ while True:
   try:
     action = bridge.best_action()
     print action
-    print agent.energy
     agent.execute(action)
   except IndexError:
     print "NO MORE ACTIONS, ABORTING"
     break 
-  except BaseException:
-    print 'prolog error...'
-    while True:
-      query = raw_input('?- ')
-      print list(bridge.prolog.query(query))
+  # except BaseException:
+  #   print 'prolog error...'
+  #   while True:
+  #     query = raw_input('?- ')
+  #     print list(bridge.prolog.query(query))
   if action_list[-1] == 'getSword':
     print 'FIN! GOT THE SWORD :)'
+    break
+  if action_list[-1] == 'getAttacked':
+    print 'YOU ARE DEAD.'
     break
   #print action_list
   #print 'on', list(bridge.prolog.query("on(X, Y)"))

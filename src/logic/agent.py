@@ -22,8 +22,13 @@ class Agent:
   def add_visited(self, x, y):
     self.bridge.assert_visited(x, y)
 
+  def update_life(self):
+    if self.world.tile(self.position).is_deadly():
+      self.energy = 0
+
   def update_bridge(self):
     self.bridge.assert_on(*self.position)
+    self.bridge.assert_safe(*self.position)
     self.bridge.assert_energy(self.energy)
     self.add_visited(*self.position)
     if not self.world.is_danger_detected(self.position):
@@ -36,6 +41,7 @@ class Agent:
     arg2 = action['Arg2']
     action = getattr(self, action_name)
     action(arg1, arg2)
+    self.update_life()
     self.update_bridge()
 
   def pick_rupee(self, x, y):
@@ -115,16 +121,33 @@ class Agent:
 
     self.direction = new_direction
 
-  def walk(self, x, y):
-    self.update_bridge()
+  def walk(self, x, y, use_safe = True):
     if self.position == (x, y):
       return
       #raise "Must walk to a diferent place. Got %s and %s" % (self.position, (x, y))
 
-    safe = self.get_safe()
+    if use_safe:
+      safe = self.get_safe()
+    else:
+      safe = None
+
     path = self.world.path(self.position, (x, y), safe)
     for xx, yy in path:
       self.face_direction(xx, yy)
       self.move_forward()
       self.position = (xx, yy)
       self.update_bridge()
+
+  def teleport(self, x, y):
+    self.bridge.retractall('safe(X, Y)')
+    self.position = (x, y)
+    self.al.append('teleport:%d,%d' % (x, y))
+
+  def walk_into_vortex(self, x, y):
+    self.walk(x, y, use_safe = False)
+    xr, yr = self.world.random_position()
+    self.al.append('goIntoVortex')
+    self.teleport(xr, yr)
+
+  def dead (self, arg1, arg2):
+    self.al.append('getAttacked')
