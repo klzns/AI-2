@@ -51,10 +51,10 @@ define ['world/render'], (Render) ->
             oldLink = @getOldLink()
 
             [x, y] = @getPointForward()
-            isMonsterThere = @render.getPoint(x, y, '.e')
-            if isMonsterThere[0]
-                $(isMonsterThere[0]).fadeOut('slow', -> $(this).remove())
-                @changeEnergy(@energy-10)
+            monster = @render.getPoint(x, y, '.e')
+            if monster[0]
+                $(monster[0]).fadeOut('slow', -> $(this).remove())
+            @changeEnergy(@energy-10)
 
             @action = 'attack'
             @render.paintLink(oldLink, @)
@@ -90,8 +90,8 @@ define ['world/render'], (Render) ->
             oldLink = @getOldLink()
             @changeCost(@cost-10)
 
-            if @removeObject(@x, @y, '.c')
-                @changeEnergy(@energy+50)
+            @removeObject(@x, @y, '.c')
+            @changeEnergy(@energy+50)
 
             @action = 'get-heart'
             @render.paintLink(oldLink, @)
@@ -138,7 +138,7 @@ define ['world/render'], (Render) ->
                             @teleport(coords[0], coords[1])
                         else
                             @[action]()
-                , (i*30)
+                , (i*10)
 
         removeObject: (x, y, object) =>
             object = @render.getPoint(x, y, object)
@@ -153,6 +153,8 @@ define ['world/render'], (Render) ->
             @cost = to
 
         changeEnergy: (to) =>
+            to = Math.min(to, 100)
+
             if to <= 0
                 $('.heart-1, .heart-2, .heart-3')
                     .removeClass('heart-full')
