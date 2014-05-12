@@ -11,6 +11,7 @@ adjacent(X, Y, XX, Y) :- tile_g(XX, Y), XX is X-1.
 adjacent(X, Y, X, YY) :- tile_g(X, YY), YY is Y+1.
 adjacent(X, Y, X, YY) :- tile_g(X, YY), YY is Y-1.
 
+
 /* DETECTORS */
 /* Can detect swords on the position we are */
 detect_sword(X, Y) :- item_M(X, Y).
@@ -45,4 +46,4 @@ best_action(pick_heart, none1, none2) :- on(X, Y), detect_heart(X, Y), energy(E)
 best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y), adjacent(X, Y, XX, YY).
 best_action(walk, X, Y) :- safe(X, Y), not(on(X, Y)), not(visited(X, Y)), tile_g(X, Y).
 
-best_action(attack, X, Y) :- visited(XX, YY), adjacent(X, Y, XX, YY), detect_enemy(XX, YY), not(safe(X, Y)).
+best_action(attack, X, Y) :- tile_g(X, Y), visited(XX, YY), detect_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY).
