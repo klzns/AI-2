@@ -27,5 +27,19 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "main": "http://localhost:9000/",
+  "node-main": "main.js",
+  "window": {
+    "title": "node-webkit demo",
+    "toolbar": false,
+    "frame": true,
+    "width": 1300,
+    "height": 900,
+    "position": "center",
+    "resizable": false
+  },
+  "webkit": {
+    "plugin": true
   }
 }
