@@ -27,21 +27,7 @@ Also, make sure all of [SWI-Prolog, Python, Pyswip] are the same architechture (
 Then, at the project root, run the following commands:
 
 ```
-cd src
-
-# map.txt + item-generator.rb ==> items.txt
-ruby generator/item-generator.rb > items.txt`
-
-# map.txt + items.txt + fact-generator.rb ==> facts.pl
-ruby generator/fact-generator.rb > facts.pl
-
-# map.txt + items.txt + facts.pl + logic.py ==> action-log.json
-python logic/logic.py > action-log.json
-
-# action-log.json + gulp ==> localhost:9000
-gulp watch
-
-# now go to http://localhost:9000!
+.\run.bat
 ```
 
 
