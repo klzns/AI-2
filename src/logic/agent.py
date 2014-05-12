@@ -5,7 +5,7 @@ class Agent:
     self.world = world
 
     self.energy = 100
-    self.points = 0
+    self.cost = 0
     self.position = (20, 37)
 
     # 0 east, 1 north, 2 west, 3 south
@@ -51,35 +51,38 @@ class Agent:
 
     self.al.append('getRupee')
     self.world.tile(self.position).remove_item('R')
-    self.points += 10
+    self.cost += 10
 
   def pick_heart(self, x, y):
     self.walk(x, y)
 
     self.al.append('getHeart')
     self.world.tile(self.position).remove_item('C')
-    self.points -= 10
+    self.cost -= 10
     self.energy = min(self.energy + 50, 100)
 
   def pick_sword(self, x, y):
     self.walk(x, y)
-    self.points -= 100
+    self.cost -= 100
 
     if self.world.tile(self.position).has_item('M'):
       self.al.append('getSword')
     else:
       self.al.append('getFakeSword')
-      
+
     self.world.tile(self.position).remove_item('M')
     self.world.tile(self.position).remove_item('F')
 
   def turn_left(self):
+    self.cost -= 1
     self.al.append('turnLeft')
 
   def turn_right(self):
+    self.cost -= 1
     self.al.append('turnRight')
 
   def move_forward(self):
+    self.cost -= 1
     self.al.append('moveForward')
 
   def attack(self, x, y):
@@ -92,6 +95,7 @@ class Agent:
 
     # Face the monster and attack it!
     self.face_direction(x, y)
+    self.cost -= 5
     self.al.append('attack')
     self.energy -= 10
     self.world.tile((x, y)).remove_item('E')
@@ -151,7 +155,6 @@ class Agent:
     self.update_bridge()
 
     xr, yr = self.world.random_position()
-    print xr, yr
     self.position = (xr, yr)
 
     # Sadly, we have to retract all connex in order
@@ -159,7 +162,7 @@ class Agent:
     # This is because we may end up in a disconnex region
     # from where we were.
     self.bridge.retractall('connex(X, Y)')
-
+    
     self.al.append('goIntoVortex')
     self.al.append('teleport:%d,%d' % (xr, yr))
 

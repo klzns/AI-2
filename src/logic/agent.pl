@@ -27,16 +27,11 @@
 
 /* UTILS */
 adjacent(X, Y, XX, Y) :- tile_g(XX, Y), XX is X+1.
-adjacent(X, Y, XX, Y) :- tile_g(XX, Y), XX is X-1.
-adjacent(X, Y, X, YY) :- tile_g(X, YY), YY is Y+1.
 adjacent(X, Y, X, YY) :- tile_g(X, YY), YY is Y-1.
+adjacent(X, Y, X, YY) :- tile_g(X, YY), YY is Y+1.
+adjacent(X, Y, XX, Y) :- tile_g(XX, Y), XX is X-1.
 
-/* INIT */
-/* no need -- will be asserted by Python
-energy(100).
-on(20, 37).
-visited(20, 37).
-*/
+distance(X, Y, XX, YY, D) :- D is abs(X-XX)+abs(Y-YY).
 
 /* SAFETY */
 /* a position is safe if: */
@@ -50,7 +45,7 @@ safe(X, Y) :- tile_g(X, Y), adjacent(X, Y, XX, YY), visited(XX, YY),
               (not(percept_enemy(XX, YY)); attacked(X, Y)).
 
 /* CONNECTIVITY */
-/* in Python, we assert connex to the tile we are on. 
+/* in Python, we assert connex to the tile we are on (and accumulate it).
    but in reality, its adjacent tiles are also connex.
    so connex is defined by Python, and connexx by Prolog */
 connexx(X, Y) :- tile_g(X, Y), connex(X, Y).
@@ -66,14 +61,21 @@ best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), percept_sword(X, Y).
 best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), percept_sword(X, Y).
 best_action(pick_heart, X, Y) :- tile_g(X, Y), on(X, Y), percept_heart(X, Y), energy(E), E < 51.
 
+/* low on energy and want to attack */
+best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), percept_heart(X, Y).
+
+best_action(attack, X, Y) :- tile_g(X, Y), tile_g(XX, YY), energy(E), E > 10, on(XX, YY), percept_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY).
+
 /* walk near */
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), adjacent(X, Y, XX, YY).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 2).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 3).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 4).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 5).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 6).
 
 /* walk wherever */
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y).
-
-/* low on energy and want to attack */
-best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), percept_heart(X, Y).
 
 /* no more open paths, attack! */
 best_action(attack, X, Y) :- tile_g(X, Y), tile_g(XX, YY), energy(E), E > 10, visited(XX, YY), percept_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY).

@@ -28,7 +28,7 @@ while True:
     if action:
       agent.execute(action)
     else:
-      print "NO MORE ACTIONS, ABORTING"
+      print "STUCK with cost %d" % agent.cost
       break 
   except PrologError:
     print 'PrologError'
@@ -43,10 +43,10 @@ while True:
     raise err
 
   if action_list[-1] == 'getSword':
-    print 'FIN! GOT THE SWORD :)'
+    print 'WIN with cost %d' % agent.cost
     break
   if action_list[-1] == 'getAttacked':
-    print 'YOU ARE DEAD.'
+    print 'DEAD with cost %d' % agent.cost
     break
 
 
