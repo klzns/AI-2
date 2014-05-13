@@ -28,7 +28,7 @@ while True:
   if action:
     agent.execute(action)
   else:
-    print 'STUCK'
+    # print 'STUCK'
     break 
 
   if action_list[-1] == 'getSword':
