@@ -17,22 +17,29 @@ First, install the dependencies:
  * Python 2.7
  * Pyswip
  * Node.js
- * Gulp and Bower (npm install --global gulp bower)
 
 Make sure the binaries of these tools are available on your PATH. 
 
 Also, make sure all of [SWI-Prolog, Python, Pyswip] are the same architechture (x86 or x64).
 
+Run these commands at `src/visualization`:
+
+```
+npm install --global gulp bower
+npm install
+bower install
+```
+
 Then, at the project root, run the following commands:
 
 ```
-.\run.bat
+run.bat
 ```
 
 However, if you want to use a custom `items-custom.txt`, place it in `src` and run this one instead:
 
 ```
-.\run-custom.bat
+run-custom.bat
 ```
 
 
@@ -119,11 +126,13 @@ And then run it:
 gulp
 gulp watch
 ```
-A new browser window should be now open at http://localhost:9000.
+A new browser window should be now open at http://loclhost:9000.
 
 #### Release
 
-Go to `src/visualization/` and run `nw.exe`.
+Download [Node Webkit](https://github.com/rogerwang/node-webkit) and extract it into `src/visualization`.
+
+Then, run `nw.exe`.
 
 ## File Formats
 
