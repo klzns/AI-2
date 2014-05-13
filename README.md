@@ -29,7 +29,7 @@ Then, at the project root, run the following commands:
 .\run.bat
 ```
 
-However, if you want to use custom `map.txt` and `items.txt`, place them in `src` and run this one instead:
+However, if you want to use a custom `items-custom.txt`, place it in `src` and run this one instead:
 
 ```
 .\run-custom.bat
