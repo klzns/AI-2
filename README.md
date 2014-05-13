@@ -82,7 +82,7 @@ The main script is `src/logic/logic.py`, but you must execute it from `src`. You
 
 ```
 cd src
-python logic/logic.py
+python logic/logic.py >  action-log.json
 ``` 
 
 It outputs an array of strings to stdout, so we'll be redirecting it to a file.
@@ -92,10 +92,17 @@ It is important that the file `src/facts.pl` is accessible and up to date.
 
 ### Path Visualizer
 
-cd into its folder and install the dependencies:
+Copy the necessary files:
 
 ```
 cd src
+cp items.txt /visualization/app/items.txt
+cp actions-log.json /visualization/app/action-log.json
+```
+
+Install the dependencies:
+
+```
 cd visualization
 npm install -g gulp bower
 npm install
