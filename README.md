@@ -100,6 +100,10 @@ cp items.txt /visualization/app/items.txt
 cp actions-log.json /visualization/app/action-log.json
 ```
 
+If you want to change some files in this step, like the map, for instance, please read Development; otherwise just read Release.
+
+#### Development
+
 Install the dependencies:
 
 ```
@@ -115,9 +119,11 @@ And then run it:
 gulp
 gulp watch
 ```
-
 A new browser window should be now open at http://localhost:9000.
 
+#### Release
+
+Go to `src/visualization/` and run `nw.exe`.
 
 ## File Formats
 

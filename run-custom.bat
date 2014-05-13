@@ -11,5 +11,4 @@ python logic/logic.py > ./visualization/app/action-log.json
 
 echo "Running gulp"
 cd visualization
-gulp
-gulp watch
+nw.exe
