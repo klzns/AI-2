@@ -6,12 +6,7 @@ var gulp = require('gulp');
 // load plugins
 var $ = require('gulp-load-plugins')();
 
-gulp.task('extras', function () {
-    return gulp.src(['app/action-log.json', 'app/items.txt'], { dot: true })
-        .pipe(gulp.dest('dist'));
-});
-
-gulp.task('desktop', ['extras'], function () {
+gulp.task('desktop', [], function () {
     var connect = require('connect');
     var app = connect()
         .use(connect.static('app'))
