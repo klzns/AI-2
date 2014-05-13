@@ -30,16 +30,49 @@ npm install
 bower install
 ```
 
+Also, download 
+
 Then, at the project root, run the following commands:
 
 ```
-run.bat
+cd src
+
+echo "Generating random items"
+ruby generator/item-generator.rb > items.txt
+cp items.txt visualization/app/items.txt
+
+echo "Generating facts"
+ruby generator/fact-generator.rb > facts.pl
+
+echo "Generating action log... May take a while"
+python logic/logic.py > action-log.json
+cp action-log.json visualization/app/action-log.json
+
+echo "Running gulp"
+cd visualization
+gulp
+gulp watch
 ```
 
 However, if you want to use a custom `items-custom.txt`, place it in `src` and run this one instead:
 
 ```
-run-custom.bat
+cd src
+
+echo "Skipping random items, copying from src/items.txt"
+cp items-custom.txt visualization/app/items.txt
+
+echo "Generating facts"
+ruby generator/fact-generator.rb > facts.pl
+
+echo "Generating action log... May take a while"
+python logic/logic.py > action-log.json
+cp action-log.json visualization/app/action-log.json
+
+echo "Running gulp"
+cd visualization
+gulp
+gulp watch
 ```
 
 
