@@ -17,7 +17,7 @@ First, install the dependencies:
  * Python 2.7
  * Pyswip
  * Node.js
- * Gulp (npm install --global gulp)
+ * Gulp and Bower (npm install --global gulp bower)
 
 Make sure the binaries of these tools are available on your PATH. 
 
@@ -40,13 +40,13 @@ However, if you want to use custom `map.txt` and `items.txt`, place them in `src
 
 The project is separated in three main applications:
 
- * **Item Generator**: reads src/map.txt and generates outputs a list of item positions, following the specifications set by the instructions. Implemented in *Ruby*.
+ * **Fact Generator**: reads src/map.txt and generates simple Prolog facts. Implemented in *Ruby*.
 
- * **Fact Generator**: reads src/map.txt and src/items.txt and generates Prolog facts. Implemented in *Ruby*.
+ * **Item Generator**: reads src/map.txt and generates a list of item positions, following the specifications set by the instructions. Implemented in *Ruby*.
 
  * **Logic Agent**: reads the map and uses logic to walk through the forest, while facing enemies, gathering valuables, and (hopefully) achieving the objective. Implemented in *Prolog* (logical decisions) and *Python* (consequences, path-finding, etc).
 
- * **Path Illustrator**: reads the map and path that were generated and draws the forest, illustrating the hero's journey. Implemented in *web technologies*.
+ * **Path Visualizer**: reads the map and path that were generated and draws the forest, illustrating the hero's journey. Implemented in *web technologies*.
 
 
 
@@ -74,6 +74,42 @@ ruby src/generator/fact-generator.rb > src/facts.pl
 It outputs the facts to stdout, so we'll be redirecting it to a file.
 
 It is important that the files `src/map.txt` and `src/items.txt` are accessible and in the correct format. 
+
+
+### Logic Agent
+
+The main script is `src/logic/logic.py`, but you must execute it from `src`. You should run it like this, if you have Python installed:
+
+```
+cd src
+python logic/logic.py
+``` 
+
+It outputs an array of strings to stdout, so we'll be redirecting it to a file.
+
+It is important that the file `src/facts.pl` is accessible and up to date.
+
+
+### Path Visualizer
+
+cd into its folder and install the dependencies:
+
+```
+cd src
+cd visualization
+npm install -g gulp bower
+npm install
+bower install
+```
+
+And then run it:
+
+```
+gulp
+gulp watch
+```
+
+A new browser window should be now open at http://localhost:9000.
 
 
 ## File Formats
@@ -107,3 +143,4 @@ Coordinates follow these rules:
 
 ### log.json
 
+It's an array of strings.

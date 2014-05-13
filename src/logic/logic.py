@@ -22,37 +22,26 @@ agent = Agent(bridge, action_list, world)
 
 # This is the main loop.
 while True:
-  try:
-    action = bridge.best_action()
-    print action
-    if action:
-      agent.execute(action)
-    else:
-      print 'STUCK'
-      break 
-  except PrologError:
-    print 'PrologError'
-    while True:
-      query = raw_input('?- ')
-      print list(bridge.prolog.query(query))
-  except BaseException as err:
-    print json.dumps(action_list)
-    while True:
-      query = raw_input('?- ')
-      print list(bridge.prolog.query(query))
-    raise err
+
+  action = bridge.best_action()
+  # print action
+  if action:
+    agent.execute(action)
+  else:
+    print 'STUCK'
+    break 
 
   if action_list[-1] == 'getSword':
-    print 'WIN'
+    # print 'WIN'
     break
   if action_list[-1] == 'getAttacked':
-    print 'DEAD'
+    # print 'DEAD'
     break
 
 
 print json.dumps(action_list)
-print 'with cost %d' % agent.cost
+# print 'with cost %d' % agent.cost
 
-while True:
-  query = raw_input('?- ')
-  print list(bridge.prolog.query(query))
+# while True:
+#   query = raw_input('?- ')
+#   print list(bridge.prolog.query(query))
