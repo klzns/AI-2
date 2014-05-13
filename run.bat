@@ -1,7 +1,8 @@
 cd src
 
 echo "Generating random items"
-ruby generator/item-generator.rb > ./visualization/app/items.txt
+ruby generator/item-generator.rb > ./items.txt
+cp items.txt ./visualization/app/items.txt
 
 echo "Generating facts"
 ruby generator/fact-generator.rb > facts.pl
