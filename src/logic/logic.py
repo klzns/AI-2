@@ -28,7 +28,7 @@ while True:
     if action:
       agent.execute(action)
     else:
-      print "STUCK with cost %d" % agent.cost
+      print 'STUCK'
       break 
   except PrologError:
     print 'PrologError'
@@ -43,14 +43,15 @@ while True:
     raise err
 
   if action_list[-1] == 'getSword':
-    print 'WIN with cost %d' % agent.cost
+    print 'WIN'
     break
   if action_list[-1] == 'getAttacked':
-    print 'DEAD with cost %d' % agent.cost
+    print 'DEAD'
     break
 
 
 print json.dumps(action_list)
+print 'with cost %d' % agent.cost
 
 while True:
   query = raw_input('?- ')

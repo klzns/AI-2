@@ -61,18 +61,15 @@ best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), percept_sword(X, Y).
 best_action(pick_sword, X, Y) :- tile_g(X, Y), on(X, Y), percept_sword(X, Y).
 best_action(pick_heart, X, Y) :- tile_g(X, Y), on(X, Y), percept_heart(X, Y), energy(E), E < 51.
 
-/* low on energy and want to attack */
-best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 31, visited(X, Y), percept_heart(X, Y).
+/* low on energy and want to attack. seek a heart somewhere */
+best_action(pick_heart, X, Y) :- tile_g(X, Y), energy(E), E < 11, visited(X, Y), percept_heart(X, Y).
 
+/* attack detected enemy */
 best_action(attack, X, Y) :- tile_g(X, Y), tile_g(XX, YY), energy(E), E > 10, on(XX, YY), percept_enemy(XX, YY), not(safe(X, Y)), adjacent(X, Y, XX, YY).
 
 /* walk near */
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), adjacent(X, Y, XX, YY).
-best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 2).
-best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 3).
-best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 4).
-best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 5).
-best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, 6).
+best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y), on(XX, YY), distance(X, Y, XX, YY, N), N > 1, N < 6.
 
 /* walk wherever */
 best_action(walk, X, Y) :- tile_g(X, Y), safe(X, Y), not(on(X, Y)), not(visited(X, Y)), connexx(X, Y).
