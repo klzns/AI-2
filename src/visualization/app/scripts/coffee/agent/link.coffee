@@ -140,7 +140,7 @@ define ['world/render'], (Render) ->
                             @teleport(coords[0], coords[1])
                         else
                             @[action]()
-                , (i*30)
+                , (i*200)
 
         removeObject: (x, y, object) =>
             object = @render.getPoint(x, y, object)
